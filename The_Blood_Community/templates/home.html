@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodConnect - Save Lives Through Donation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "❤️";
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header-cta {
+            background: white;
+            color: #dc2626;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Floating elements animation */
+        .floating-drops {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .drop {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        .drop:nth-child(1) { width: 20px; height: 20px; left: 10%; animation-delay: 0s; }
+        .drop:nth-child(2) { width: 15px; height: 15px; left: 20%; animation-delay: 1s; }
+        .drop:nth-child(3) { width: 25px; height: 25px; left: 70%; animation-delay: 2s; }
+        .drop:nth-child(4) { width: 18px; height: 18px; left: 80%; animation-delay: 3s; }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navigation Styles */
+        nav {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #dc2626;
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .nav-links a.active {
+            color: white;
+            background: #dc2626;
+        }
+
+        /* Main Content Styles */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+            margin: 2rem 0;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-top: 4px solid #dc2626;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #dc2626;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Article Sections */
+        article {
+            margin: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #dc2626;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .impact-card {
+            background: #fef2f2;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #dc2626;
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            background: #fee2e2;
+            transform: translateX(5px);
+        }
+
+        .impact-card h3 {
+            color: #dc2626;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .impact-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-section h2::after {
+            background: white;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #dc2626;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #dc2626;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #dc2626;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="floating-drops">
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+        </div>
+        <div class="header-content">
+            <div class="logo">BloodConnect</div>
+            <a href="#donate" class="header-cta">Donate Now</a>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#donate">Donate Blood</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#stories">Success Stories</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Every Drop Counts, Every Life Matters</h1>
+            <p>Join our community of heroes who save lives through blood donation. Your single donation can save up to three lives and make a lasting impact on families in need.</p>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <span class="stat-number">50,000+</span>
+                <div class="stat-label">Lives Saved This Year</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">15,000+</span>
+                <div class="stat-label">Active Donors</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">200+</span>
+                <div class="stat-label">Partner Hospitals</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">24/7</span>
+                <div class="stat-label">Emergency Support</div>
+            </div>
+        </section>
+
+        <article>
+            <section class="section">
+                <h2>Why Your Donation Matters</h2>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <h3>🏥 Emergency Care</h3>
+                        <p>Blood donations are crucial for emergency surgeries, trauma care, and accident victims. Your donation could be the difference between life and death for someone in critical condition.</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>🎗️ Cancer Treatment</h3>
+                        <p>Cancer patients undergoing chemotherapy often need regular blood transfusions. Your donation provides hope and strength to those fighting their toughest battles.</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>👶 Newborn Care</h3>
+                        <p>Premature babies and those with birth complications rely on blood donations. Your gift helps give the smallest patients the best chance at a healthy life.</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>🩺 Chronic Conditions</h3>
+                        <p>Patients with conditions like sickle cell disease and thalassemia need regular transfusions to manage their health and maintain quality of life.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>The Donation Process</h2>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <h3>📋 Registration & Screening</h3>
+                        <p>Quick and easy registration followed by a brief health screening to ensure your safety and the safety of blood recipients.</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>🩸 Donation</h3>
+                        <p>The actual donation takes only 8-10 minutes. Relax in our comfortable chairs while our trained staff takes care of everything.</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>🍪 Recovery & Refreshments</h3>
+                        <p>Enjoy complimentary snacks and beverages while you rest for 10-15 minutes. We'll make sure you feel great before you leave.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Save Lives?</h2>
+                <p>Join thousands of heroes in our community. Schedule your donation today and become part of something bigger than yourself.</p>
+                <div class="cta-buttons">
+                    <a href="#schedule" class="btn btn-primary">Schedule Donation</a>
+                    <a href="#learn" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BloodConnect</h3>
+                <p>Connecting donors with those in need. Building a stronger, healthier community through the gift of blood donation.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#eligibility">Donation Eligibility</a></p>
+                <p><a href="#locations">Donation Centers</a></p>
+                <p><a href="#faq">Frequently Asked Questions</a></p>
+                <p><a href="#volunteer">Volunteer Opportunities</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <p><a href="#help">Help Center</a></p>
+                <p><a href="#contact">Contact Us</a></p>
+                <p><a href="#emergency">Emergency Requests</a></p>
+                <p><a href="#feedback">Feedback</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <p>📧 info@bloodconnect.org</p>
+                <p>📞 1-800-DONATE-1</p>
+                <p>🏥 Available 24/7 for emergencies</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BloodConnect. All rights reserved. Saving lives, one donation at a time.</p>
+        </div>
+    </footer>
+</body>
+</html>
