@@ -441,12 +441,11 @@
     <nav>
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="#home" class="active">Need Blood?</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#donate">Donate Blood</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#stories">Success Stories</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="{% url 'community:needblood' %}" class="active">Need Blood?</a></li>
+                <li><a href="{% url 'community:about' %}">About Me</a></li>
+                <li><a href="{% url 'community:donateblood' %}">Donate Blood</a></li>
+                <li><a href="{% url 'community:communityandposts' %}">Success Stories</a></li>
+                <li><a href="{% url 'community:login' %}">Login</a></li>
             </ul>
         </div>
     </nav>
@@ -523,8 +522,8 @@
                 <h2>Ready to Save Lives?</h2>
                 <p>Join thousands of heroes in our community. Schedule your donation today and become part of something bigger than yourself.</p>
                 <div class="cta-buttons">
-                    <a href="#schedule" class="btn btn-primary">Schedule Donation</a>
-                    <a href="#learn" class="btn btn-secondary">Learn More</a>
+                    <a href="{% url 'community:donateblood' %}" class="btn btn-primary">Schedule Donation</a>
+                    <a href="https://www.redcrossblood.org/local-homepage/news/article/blood-donation-importance.html" class="btn btn-secondary">Learn More</a>
                 </div>
             </div>
         </section>
@@ -539,14 +538,14 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <p><a href="#eligibility">Donation Eligibility</a></p>
-                <p><a href="#locations">Donation Centers</a></p>
+                <p><a href="{% url 'community:donateblood' %}">Donation Centers</a></p>
                 <p><a href="#faq">Frequently Asked Questions</a></p>
                 <p><a href="#volunteer">Volunteer Opportunities</a></p>
             </div>
             <div class="footer-section">
                 <h3>Support</h3>
                 <p><a href="#help">Help Center</a></p>
-                <p><a href="#contact">Contact Us</a></p>
+                <p><a href="{% url 'community:about' %}">Contact Us</a></p>
                 <p><a href="#emergency">Emergency Requests</a></p>
                 <p><a href="#feedback">Feedback</a></p>
             </div>

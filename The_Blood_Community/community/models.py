@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class BRequest(models.Model):
     user=models.ForeignKey(User, related_name='brequests' , on_delete=models.CASCADE)
-    bgroup=models.models.CharField(max_length=4)
+    bgroup=models.CharField(max_length=4)
     time=models.DateTimeField(default=timezone.now)
     district=models.CharField()
 

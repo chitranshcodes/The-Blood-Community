@@ -16,3 +16,19 @@ class Register(View):
 class Login(View):
     def get(self, request):
         return render(request, 'login.html')
+    
+class NeedBlood(View):
+    def get(self, request):
+        return render(request, 'needblood.html')
+    
+class About(View):
+    def get(self, request):
+        return render(request, 'about.html')
+    
+class DonateBlood(View):
+    def get(self, request):
+        return render(request, 'donateblood.html')
+
+class CommunityAndPosts(View):
+    def get(self, request):
+        return render(request, 'communityandposts.html')
