@@ -108,7 +108,7 @@ class CommunityAndPosts(View):
         return render(request, 'communityandposts.html')
     
 @method_decorator(login_required, name='dispatch')
-class Profile(View):
+class ProfileView(View):
     def get(self, request):
         current_user=request.user
         form= ProfileForm(initial={
