@@ -1,539 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Request - BloodConnect</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-            min-height: 100vh;
-        }
+    form {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
 
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white;
-            padding: 1rem 0;
-            position: relative;
-            overflow: hidden;
-        }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #c82333;
+    }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
 
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    button {
+      background: #c82333;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-        .logo::before {
-            content: "❤️";
-            animation: heartbeat 2s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .back-link {
-            background: white;
-            color: #dc2626;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .back-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-
-        /* Main Content */
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .request-container {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-top: 5px solid #dc2626;
-        }
-
-        .request-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .request-header h1 {
-            color: #dc2626;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .request-header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .urgency-banner {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: bold;
-        }
-
-        .form-section {
-            margin-bottom: 2rem;
-        }
-
-        .form-section h3 {
-            color: #dc2626;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            border-bottom: 2px solid #fef2f2;
-            padding-bottom: 0.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #fafafa;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #dc2626;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .blood-group-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .blood-group-option {
-            position: relative;
-        }
-
-        .blood-group-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .blood-group-option label {
-            display: block;
-            padding: 0.75rem;
-            text-align: center;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fafafa;
-            font-weight: bold;
-        }
-
-        .blood-group-option input[type="radio"]:checked + label {
-            background: #dc2626;
-            color: white;
-            border-color: #dc2626;
-        }
-
-        .urgency-levels {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .urgency-option {
-            position: relative;
-        }
-
-        .urgency-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .urgency-option label {
-            display: block;
-            padding: 1rem;
-            text-align: center;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fafafa;
-            font-weight: bold;
-        }
-
-        .urgency-option.high input[type="radio"]:checked + label {
-            background: #dc2626;
-            color: white;
-            border-color: #dc2626;
-        }
-
-        .urgency-option.medium input[type="radio"]:checked + label {
-            background: #f59e0b;
-            color: white;
-            border-color: #f59e0b;
-        }
-
-        .urgency-option.low input[type="radio"]:checked + label {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
-        }
-
-        .contact-info {
-            background: #fef2f2;
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #dc2626;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white;
-            padding: 1.2rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 2rem;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
-        }
-
-        .emergency-note {
-            background: #fee2e2;
-            border: 1px solid #fecaca;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            color: #991b1b;
-        }
-
-        .emergency-note strong {
-            color: #dc2626;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .request-container {
-                padding: 2rem;
-                margin: 1rem;
-            }
-
-            .request-header h1 {
-                font-size: 2rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .blood-group-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .urgency-levels {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    button:hover {
+      background: #a71d2a;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">BloodConnect</div>
-            <a href="index.html" class="back-link">← Back to Home</a>
-        </div>
-    </header>
+  <form method="post">
+    {% csrf_token %}
+    <label for="bgroup">Blood Group</label>
+    {{ form.bgroup }}
 
-    <main>
-        <div class="request-container">
-            <div class="request-header">
-                <h1>Request Blood</h1>
-                <p>Submit your blood request and we'll connect you with available donors</p>
-            </div>
+    <label for="district">District</label>
+    {{ form.district }}
 
-            <div class="urgency-banner">
-                🚨 For life-threatening emergencies, call 911 immediately
-            </div>
-
-            <div class="emergency-note">
-                <strong>Important:</strong> This form is for non-emergency blood requests. If you need blood urgently for surgery or emergency treatment, please contact your hospital's blood bank directly or call emergency services.
-            </div>
-
-            <form>
-                <div class="form-section">
-                    <h3>Patient Information</h3>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="patientName">Patient Full Name</label>
-                            <input type="text" id="patientName" name="patientName" required placeholder="Enter patient's full name">
-                        </div>
-                        <div class="form-group">
-                            <label for="patientAge">Patient Age</label>
-                            <input type="number" id="patientAge" name="patientAge" min="1" max="120" required placeholder="Enter age">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Required Blood Group</label>
-                        <div class="blood-group-grid">
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-a-positive" name="requiredBloodGroup" value="A+" required>
-                                <label for="req-a-positive">A+</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-a-negative" name="requiredBloodGroup" value="A-" required>
-                                <label for="req-a-negative">A-</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-b-positive" name="requiredBloodGroup" value="B+" required>
-                                <label for="req-b-positive">B+</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-b-negative" name="requiredBloodGroup" value="B-" required>
-                                <label for="req-b-negative">B-</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-ab-positive" name="requiredBloodGroup" value="AB+" required>
-                                <label for="req-ab-positive">AB+</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-ab-negative" name="requiredBloodGroup" value="AB-" required>
-                                <label for="req-ab-negative">AB-</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-o-positive" name="requiredBloodGroup" value="O+" required>
-                                <label for="req-o-positive">O+</label>
-                            </div>
-                            <div class="blood-group-option">
-                                <input type="radio" id="req-o-negative" name="requiredBloodGroup" value="O-" required>
-                                <label for="req-o-negative">O-</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="unitsNeeded">Units Needed</label>
-                            <select id="unitsNeeded" name="unitsNeeded" required>
-                                <option value="">Select units needed</option>
-                                <option value="1">1 Unit</option>
-                                <option value="2">2 Units</option>
-                                <option value="3">3 Units</option>
-                                <option value="4">4 Units</option>
-                                <option value="5+">5+ Units</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="neededBy">Needed By Date</label>
-                            <input type="date" id="neededBy" name="neededBy" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>Location Details</h3>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="district">District</label>
-                            <select id="district" name="district" required>
-                                <option value="">Select district</option>
-                                <option value="dhaka">Dhaka</option>
-                                <option value="chittagong">Chittagong</option>
-                                <option value="sylhet">Sylhet</option>
-                                <option value="rajshahi">Rajshahi</option>
-                                <option value="khulna">Khulna</option>
-                                <option value="barisal">Barisal</option>
-                                <option value="rangpur">Rangpur</option>
-                                <option value="mymensingh">Mymensingh</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="hospital">Hospital/Medical Center</label>
-                            <input type="text" id="hospital" name="hospital" required placeholder="Enter hospital name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Complete Address</label>
-                        <textarea id="address" name="address" required placeholder="Enter complete address including area, city, and any landmarks"></textarea>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>Request Priority</h3>
-                    
-                    <div class="form-group">
-                        <label>Urgency Level</label>
-                        <div class="urgency-levels">
-                            <div class="urgency-option high">
-                                <input type="radio" id="urgent" name="urgency" value="urgent" required>
-                                <label for="urgent">🔴 Urgent<br><small>Within 24 hours</small></label>
-                            </div>
-                            <div class="urgency-option medium">
-                                <input type="radio" id="moderate" name="urgency" value="moderate" required>
-                                <label for="moderate">🟡 Moderate<br><small>Within 3 days</small></label>
-                            </div>
-                            <div class="urgency-option low">
-                                <input type="radio" id="planned" name="urgency" value="planned" required>
-                                <label for="planned">🟢 Planned<br><small>Within a week</small></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reason">Reason for Blood Request</label>
-                        <textarea id="reason" name="reason" required placeholder="Please provide details about the medical condition or procedure requiring blood transfusion"></textarea>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>Contact Information</h3>
-                    
-                    <div class="contact-info">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactName">Contact Person Name</label>
-                                <input type="text" id="contactName" name="contactName" required placeholder="Name of person to contact">
-                            </div>
-                            <div class="form-group">
-                                <label for="relationship">Relationship to Patient</label>
-                                <select id="relationship" name="relationship" required>
-                                    <option value="">Select relationship</option>
-                                    <option value="self">Self</option>
-                                    <option value="parent">Parent</option>
-                                    <option value="spouse">Spouse</option>
-                                    <option value="sibling">Sibling</option>
-                                    <option value="child">Child</option>
-                                    <option value="relative">Other Relative</option>
-                                    <option value="friend">Friend</option>
-                                    <option value="medical-staff">Medical Staff</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactPhone">Primary Phone Number</label>
-                                <input type="tel" id="contactPhone" name="contactPhone" required placeholder="Enter primary contact number">
-                            </div>
-                            <div class="form-group">
-                                <label for="alternatePhone">Alternate Phone Number</label>
-                                <input type="tel" id="alternatePhone" name="alternatePhone" placeholder="Enter alternate contact number">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="contactEmail">Email Address</label>
-                            <input type="email" id="contactEmail" name="contactEmail" placeholder="Enter email for updates">
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn">Submit Blood Request</button>
-            </form>
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 BloodConnect. All rights reserved. Saving lives, one donation at a time.</p>
-        </div>
-    </footer>
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>

@@ -1,310 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - BloodConnect</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+        min-height: 100vh;
+      }
+      
+      /* Header Styles */
+      header {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        padding: 1rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+      
+      .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .logo::before {
+        content: '❤️';
+        animation: heartbeat 2s infinite;
+      }
+      
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-            min-height: 100vh;
+        50% {
+          transform: scale(1.1);
         }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white;
-            padding: 1rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo::before {
-            content: "❤️";
-            animation: heartbeat 2s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .back-link {
-            background: white;
-            color: #dc2626;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .back-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-
-        /* Main Content */
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 200px);
-            padding: 2rem;
-        }
-
+      }
+      
+      .back-link {
+        background: white;
+        color: #dc2626;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .back-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Main Content */
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 200px);
+        padding: 2rem;
+      }
+      
+      .login-container {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 450px;
+        border-top: 5px solid #dc2626;
+      }
+      
+      .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      
+      .login-header h1 {
+        color: #dc2626;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .login-header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+      }
+      
+      .form-group input {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #fafafa;
+      }
+      
+      .form-group input:focus {
+        outline: none;
+        border-color: #dc2626;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+      
+      .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+      }
+      
+      .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .remember-me input[type='checkbox'] {
+        width: auto;
+      }
+      
+      .forgot-password {
+        color: #dc2626;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .forgot-password:hover {
+        color: #b91c1c;
+      }
+      
+      .login-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+      }
+      
+      .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+      }
+      
+      .divider {
+        text-align: center;
+        margin: 1.5rem 0;
+        position: relative;
+        color: #666;
+      }
+      
+      .divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #e5e7eb;
+      }
+      
+      .divider span {
+        background: white;
+        padding: 0 1rem;
+      }
+      
+      .signup-link {
+        text-align: center;
+        color: #666;
+      }
+      
+      .signup-link a {
+        color: #dc2626;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      
+      .signup-link a:hover {
+        color: #b91c1c;
+      }
+      
+      /* Footer */
+      footer {
+        background: #1f2937;
+        color: white;
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: auto;
+      }
+      
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .login-container {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 450px;
-            border-top: 5px solid #dc2626;
+          padding: 2rem;
+          margin: 1rem;
         }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+      
         .login-header h1 {
-            color: #dc2626;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+          font-size: 2rem;
         }
-
-        .login-header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #fafafa;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #dc2626;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        }
-
+      
         .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: flex-start;
         }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .remember-me input[type="checkbox"] {
-            width: auto;
-        }
-
-        .forgot-password {
-            color: #dc2626;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-password:hover {
-            color: #b91c1c;
-        }
-
-        .login-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 1.5rem;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 1.5rem 0;
-            position: relative;
-            color: #666;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #e5e7eb;
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 1rem;
-        }
-
-        .signup-link {
-            text-align: center;
-            color: #666;
-        }
-
-        .signup-link a {
-            color: #dc2626;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .signup-link a:hover {
-            color: #b91c1c;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 2rem;
-                margin: 1rem;
-            }
-
-            .login-header h1 {
-                font-size: 2rem;
-            }
-
-            .form-options {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-        }
+      }
+      .error {
+        color: #ff6b6b; /* Soft red for errors */
+        background-color: #2a2a2a; /* Dark gray background */
+        border: 1px solid #ff4c4c;
+        padding: 6px 10px;
+        margin-top: 4px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .success-message {
+        background-color: #d4edda; /* Light green background */
+        color: #155724; /* Dark green text */
+        border: 1px solid #c3e6cb; /* Slightly darker green border */
+        padding: 12px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        text-align: center;  
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <div class="logo">BloodConnect</div>
-            <a href="index.html" class="back-link">← Back to Home</a>
-        </div>
+      <div class="header-content">
+        <div class="logo">BloodConnect</div>
+        <a href="{% url 'community:home' %}" class="back-link">← Back to Home</a>
+      </div>
     </header>
 
     <main>
-        <div class="login-container">
-            <div class="login-header">
-                <h1>Welcome Back</h1>
-                <p>Sign in to your BloodConnect account</p>
-            </div>
-
-            <form>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email">
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="Enter your password">
-                </div>
-
-                <div class="form-options">
-                    <div class="remember-me">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="login-btn">Sign In</button>
-            </form>
-
-            <div class="divider">
-                <span>or</span>
-            </div>
-
-            <div class="signup-link">
-                <p>Don't have an account? <a href="registration.html">Create Account</a></p>
-            </div>
+      <div class="login-container">
+        <div>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="success-message">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+          <h1>Welcome Back</h1>
+          <p>Sign in to your BloodConnect account</p>
         </div>
+
+        <form method="POST" action="{% url 'community:login' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {% if form.username.errors %}
+              <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {% if form.password.errors %}
+              <div class="error">{{ form.password.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div>{{ form.non_field_errors }}</div>
+          <button type="submit" class="login-btn">Sign In</button>
+        </form>
+
+        <div class="signup-link">
+          <p>
+            Don't have an account? <a href="{% url 'community:register' %}">Create Account</a>
+          </p>
+        </div>
+      </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 BloodConnect. All rights reserved. Saving lives, one donation at a time.</p>
-        </div>
+      <div class="footer-content">
+        <p>&copy; 2024 BloodConnect. All rights reserved. Saving lives, one donation at a time.</p>
+      </div>
     </footer>
-</body>
+  </body>
 </html>
