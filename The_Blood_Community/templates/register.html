@@ -295,16 +295,26 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+         .error {
+  color: #ff6b6b;      /* Soft red for errors */
+  background-color: #2a2a2a; /* Dark gray background */
+  border: 1px solid #ff4c4c;
+  padding: 6px 10px;
+  margin-top: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
             <div class="logo">BloodConnect</div>
-            <a href="index.html" class="back-link">← Back to Home</a>
+            <a href="{% url 'community:home' %}" class="back-link">← Back to Home</a>
         </div>
     </header>
-
+    
     <main>
         <div class="registration-container">
             <div class="registration-header">
@@ -312,109 +322,68 @@
                 <p>Create your BloodConnect account and start saving lives</p>
             </div>
 
-            <form>
+            <form method="POST" action="{% url 'community:register' %}">
+                {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" required placeholder="Enter first name">
+                              {{ form.username.label_tag }}
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                        <div class="error">{{ form.username.errors }}</div>
+                            {% endif %}
                     </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" required placeholder="Enter last name">
-                    </div>
-                </div>
+
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="Enter phone number">
-                    </div>
-                    <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" id="age" name="age" min="18" max="65" required placeholder="Enter age">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="district">District</label>
-                    <select id="district" name="district" required>
-                        <option value="">Select your district</option>
-                        <option value="dhaka">Dhaka</option>
-                        <option value="chittagong">Chittagong</option>
-                        <option value="sylhet">Sylhet</option>
-                        <option value="rajshahi">Rajshahi</option>
-                        <option value="khulna">Khulna</option>
-                        <option value="barisal">Barisal</option>
-                        <option value="rangpur">Rangpur</option>
-                        <option value="mymensingh">Mymensingh</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Blood Group</label>
-                    <div class="blood-group-grid">
-                        <div class="blood-group-option">
-                            <input type="radio" id="a-positive" name="bloodGroup" value="A+" required>
-                            <label for="a-positive">A+</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="a-negative" name="bloodGroup" value="A-" required>
-                            <label for="a-negative">A-</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="b-positive" name="bloodGroup" value="B+" required>
-                            <label for="b-positive">B+</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="b-negative" name="bloodGroup" value="B-" required>
-                            <label for="b-negative">B-</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="ab-positive" name="bloodGroup" value="AB+" required>
-                            <label for="ab-positive">AB+</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="ab-negative" name="bloodGroup" value="AB-" required>
-                            <label for="ab-negative">AB-</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="o-positive" name="bloodGroup" value="O+" required>
-                            <label for="o-positive">O+</label>
-                        </div>
-                        <div class="blood-group-option">
-                            <input type="radio" id="o-negative" name="bloodGroup" value="O-" required>
-                            <label for="o-negative">O-</label>
-                        </div>
-                    </div>
+                {{ form.email.label_tag }}
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                        <div class="error">{{ form.email.errors }}</div>
+                            {% endif %}   
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required placeholder="Create password">
+                        {{ form.bgroup.label_tag }}
+                                {{ form.bgroup }}
+                                {% if form.bgroup.errors %}
+                        <div class="error">{{ form.bgroup.errors }}</div>
+                            {% endif %}   
+                     </div>
+                </div>
+
+                <div class="form-group">
+                  {{ form.district.label_tag }}
+                                {{ form.district }}
+                                {% if form.district.errors %}
+                        <div class="error">{{ form.district.errors }}</div>
+                            {% endif %}   
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                      {{ form.password.label_tag }}
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                        <div class="error">{{ form.password.errors }}</div>
+                            {% endif %}   
                     </div>
                     <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm password">
+                    {{ form.confirm_password.label_tag }}
+                                {{ form.confirm_password }}
+                                {% if form.confirm_password.errors %}
+                        <div class="error">{{ form.confirm_password.errors }}</div>
+                            {% endif %}      
                     </div>
                 </div>
 
                 <div class="terms-checkbox">
                     <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand that my information will be used to connect me with blood donation opportunities.</label>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand that my email will be used to connect me with blood donation opportunities.</label>
                 </div>
-
+                <div>{{ form.non_field_errors }}</div>
                 <button type="submit" class="register-btn">Create Account</button>
             </form>
-
-            <div class="divider">
-                <span>or</span>
-            </div>
 
             <div class="login-link">
                 <p>Already have an account? <a href="{% url 'community:login' %}">Sign In</a></p>

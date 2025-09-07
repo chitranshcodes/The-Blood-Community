@@ -113,11 +113,13 @@ class RegistrationForm(forms.Form):
         return cleaned_data
 
 class LoginForm(forms.Form):
-    email= forms.EmailField(label="Email Address", validators=[
-        EmailValidator(message="Enter a valid Email Address")
-    ])  
+    username= forms.CharField(label="Username")  
     password= forms.CharField(label="Password", widget=forms.PasswordInput,  validators=[MinLengthValidator(8, message="Password must be at least 8 characters")])
 
 class BRequestForm(forms.Form):
+     bgroup=forms.ChoiceField(label='blood-group', choices=BLOOD_GROUPS, required=True)
+     district=forms.ChoiceField(label='District', choices=DISTRICT_CHOICES, required=True)
+
+class ProfileForm(forms.Form):
      bgroup=forms.ChoiceField(label='blood-group', choices=BLOOD_GROUPS, required=True)
      district=forms.ChoiceField(label='District', choices=DISTRICT_CHOICES, required=True)

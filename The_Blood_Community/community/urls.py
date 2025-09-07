@@ -10,5 +10,8 @@ urlpatterns = [
     path('needblood/', views.NeedBlood.as_view(), name='needblood'),
     path('about/', views.About.as_view(), name='about'),
     path('donateblood/', views.DonateBlood.as_view(), name='donateblood'),
-    path('communityandposts/', views.CommunityAndPosts.as_view(), name='communityandposts')
+    path('communityandposts/', views.CommunityAndPosts.as_view(), name='communityandposts'),
+    path('logout/', views.Logout, name='logout'),
+    path('profile/', views.Profile.as_view(), name='profile'),
+    path('requestblood/', views.RequestBlood.as_view(), name='requestblood')
 ]
