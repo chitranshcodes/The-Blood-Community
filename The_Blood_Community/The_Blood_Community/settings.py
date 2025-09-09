@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -131,4 +131,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "969c1f001@smtp-brevo.com"  # your account email
 EMAIL_HOST_PASSWORD = "ghwUqWdJnQ8ZxOFz"         # from Brevo
-DEFAULT_FROM_EMAIL = "969c1f001@smtp-brevo.com"
+DEFAULT_FROM_EMAIL = "ds2401125@gmail.com"

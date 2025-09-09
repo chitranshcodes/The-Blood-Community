@@ -15,6 +15,25 @@
       margin: 0;
     }
 
+    /* Home button fixed at top-left */
+    .home-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      display: inline-block;
+      padding: 10px 18px;
+      background: #c82333;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .home-btn:hover {
+      background: #a71d2a;
+    }
+
     form {
       background: white;
       padding: 20px 30px;
@@ -53,6 +72,11 @@
   </style>
 </head>
 <body>
+
+  <!-- Home Button -->
+  <a href="{% url 'community:home' %}" class="home-btn">⬅ Home</a>
+
+  <!-- Form -->
   <form method="post">
     {% csrf_token %}
     <label for="bgroup">Blood Group</label>
@@ -63,5 +87,6 @@
 
     <button type="submit">Submit</button>
   </form>
+
 </body>
 </html>

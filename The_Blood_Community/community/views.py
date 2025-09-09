@@ -15,7 +15,9 @@ from django.core.mail import send_mail
 
 class Home(View):
     def get(self, request):
-        return render(request, 'home.html')
+        active_users=User.objects.count()
+        blood_requests=BRequest.objects.count()
+        return render(request, 'home.html', {'active_users':active_users, 'blood_requests':blood_requests})
     
 class Register(View):
     def get(self, request):
@@ -98,7 +100,10 @@ class RequestBlood(View):
             subject='Urgent Need of Blood nearby'
             message=f'{current_user} from {district} urgently needs {bgroup} blood group. Plz contact the person and perform a goodwill by donating the blood to save a life. Wish you the best!'
             from_email=settings.DEFAULT_FROM_EMAIL
-            Receipent_List=User.objects.filter(profile__district=district)
+            Receipent_List=[]
+            qs=User.objects.filter(profile__district=district)
+            for u in qs:
+                Receipent_List.append(u.email)
             send_mail(subject, message, from_email, Receipent_List)
             #mail portion ends
             messages.success(request, "Requirement Added for Donation Request")
@@ -113,7 +118,7 @@ class About(View):
 class DonateBlood(View):
     def get(self, request):
         current_user=request.user
-        brequests=BRequest.objects.filter(district=current_user.profile.district)
+        brequests=BRequest.objects.filter(district=current_user.profile.district).order_by('-time')
         json_path=os.path.join(settings.BASE_DIR, 'community', "data", 'blood_bank.json')
         with open(json_path, "r", encoding='utf-8') as f:
             blood_banks=json.load(f)
@@ -154,3 +159,10 @@ def Logout(request):
     logout(request)
     messages.success(request, "Fir Milenge! Stay safe...")
     return redirect("community:home")
+
+@login_required
+def delete(request, brid):
+    br=BRequest.objects.get(id=brid)
+    br.delete()
+    messages.success(request, "Glad you got it !")
+    return redirect('community:home')
