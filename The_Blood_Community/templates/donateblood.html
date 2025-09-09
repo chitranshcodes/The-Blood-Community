@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donate Blood</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      
+      header {
+        background: #c82333; /* Red theme */
+        color: white;
+        text-align: center;
+        padding: 1.5rem 1rem;
+      }
+      
+      header h1 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+      
+      main {
+        max-width: 1000px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #c82333;
+      }
+      
+      header h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: white;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+      }
+      
+      table th,
+      table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+      }
+      
+      table th {
+        background: #c82333;
+        color: white;
+      }
+      
+      table tr:nth-child(even) {
+        background: #f2f2f2;
+      }
+      
+      table tr:hover {
+        background: #ffe6e6;
+      }
+      
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        background: #c82333;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-align: center;
+        transition: background 0.3s ease;
+      }
+      
+      .btn:hover {
+        background: #a71d2a;
+      }
+      
+      .btn-container {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Donate Blood to those in need</h1>
+    </header>
+    <main>
+      <h2>Blood demands in {{ user.profile.district }}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Blood group needed</th>
+            <th>Time posted</th>
+            <th>Contact mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for brequest in brequests %}
+            <tr>
+              <th>{{ brequest.user.username }}</th>
+              <th>{{ brequest.bgroup }}</th>
+              <th>{{ brequest.time }}</th>
+              <th>
+              <a href="https://mail.google.com/mail/?view=cm&to={{ brequest.user.email|urlencode }}&su=Blood Donation Request&body=Hello, I am {{ user.username|urlencode }} ({{ user.email|urlencode }}). I'd like to help with your blood request." target="_blank" class="btn">Mail now</a>
+     </th>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+
+    <header>
+      <h1>Wanna Donate Blood voluntarily?</h1>
+      <p>Find your nearest blood bank and Donate blood voluntarily.</p>
+    </header>
+
+    <main>
+      <h2>Available Blood Banks in {{ user.profile.district }}</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Blood Bank Name</th>
+            <th>Type</th>
+            <th>Contact</th>
+            <th>District</th>
+            <th>Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if bloodbanks %}
+            {% for bank in bloodbanks %}
+              <tr>
+                <th>{{ bank.name }}</th>
+                <th>{{ bank.type }}</th>
+                <th>{{ bank.contact }}</th>
+                <th>{{ bank.district }}</th>
+                <th>{{ bank.number }}</th>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>No Data Found !!!</tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
