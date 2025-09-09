@@ -121,3 +121,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email backend
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+# Brevo SMTP
+EMAIL_HOST = "smtp-relay.brevo.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "969c1f001@smtp-brevo.com"  # your account email
+EMAIL_HOST_PASSWORD = "ghwUqWdJnQ8ZxOFz"         # from Brevo
+DEFAULT_FROM_EMAIL = "969c1f001@smtp-brevo.com"

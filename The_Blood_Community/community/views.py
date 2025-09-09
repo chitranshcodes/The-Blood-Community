@@ -10,7 +10,9 @@ from django.utils.decorators import method_decorator
 import json
 import os
 from django.conf import settings
+from django.core.mail import send_mail
 # Create your views here.
+
 class Home(View):
     def get(self, request):
         return render(request, 'home.html')
@@ -73,7 +75,7 @@ class NeedBlood(View):
         if district:
             blood_bank=[b for b in blood_banks if b["district"].lower()==district.lower()]
 
-        return render(request, 'needblood.html', {"bloodbanks":blood_bank, "current_user":current_user})
+        return render(request, 'needblood.html', {"bloodbanks":blood_bank, 'user':request.user})
     
 @method_decorator(login_required, name='dispatch')    
 class RequestBlood(View):
@@ -91,6 +93,14 @@ class RequestBlood(View):
             district=form.cleaned_data['district']
             bgroup=form.cleaned_data['bgroup']
             BRequest.objects.create(district=district, bgroup=bgroup, user=current_user)
+            
+            #mail
+            subject='Urgent Need of Blood nearby'
+            message=f'{current_user} from {district} urgently needs {bgroup} blood group. Plz contact the person and perform a goodwill by donating the blood to save a life. Wish you the best!'
+            from_email=settings.DEFAULT_FROM_EMAIL
+            Receipent_List=User.objects.filter(profile__district=district)
+            send_mail(subject, message, from_email, Receipent_List)
+            #mail portion ends
             messages.success(request, "Requirement Added for Donation Request")
             return redirect('community:donateblood')
         return render(request, 'bloodrequest.html', {"form":form})
@@ -99,9 +109,19 @@ class About(View):
     def get(self, request):
         return render(request, 'about.html')
     
+@method_decorator(login_required, name='dispatch')
 class DonateBlood(View):
     def get(self, request):
-        return render(request, 'donateblood.html')
+        current_user=request.user
+        brequests=BRequest.objects.filter(district=current_user.profile.district)
+        json_path=os.path.join(settings.BASE_DIR, 'community', "data", 'blood_bank.json')
+        with open(json_path, "r", encoding='utf-8') as f:
+            blood_banks=json.load(f)
+        district=current_user.profile.district
+        blood_bank=[]
+        if district:
+            blood_bank=[b for b in blood_banks if b["district"].lower()==district.lower()]
+        return render(request, 'donateblood.html', {'brequests':brequests, 'bloodbanks':blood_bank })
 
 class CommunityAndPosts(View):
     def get(self, request):
