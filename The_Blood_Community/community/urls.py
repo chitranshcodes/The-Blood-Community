@@ -13,5 +13,6 @@ urlpatterns = [
     path('communityandposts/', views.CommunityAndPosts.as_view(), name='communityandposts'),
     path('logout/', views.Logout, name='logout'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
-    path('requestblood/', views.RequestBlood.as_view(), name='requestblood')
+    path('requestblood/', views.RequestBlood.as_view(), name='requestblood'),
+    path('delete/<int:brid>', views.delete, name='delete')
 ]

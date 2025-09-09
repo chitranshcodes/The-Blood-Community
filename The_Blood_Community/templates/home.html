@@ -432,6 +432,15 @@
   margin-bottom: 15px;
   text-align: center;  
 }
+.live {
+    color: red;
+    font-weight: bold;
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
     </style>
 </head>
 <body>
@@ -485,20 +494,20 @@
 
         <section class="stats">
             <div class="stat-card">
-                <span class="stat-number">50,000+</span>
-                <div class="stat-label">Lives Saved This Year</div>
+                <span class="stat-number">{{ active_users }}+</span>
+                <div class="stat-label">Users using platform to get and donate blood</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number">15,000+</span>
-                <div class="stat-label">Active Donors</div>
+                <span class="stat-number">{{ blood_requests }}</span>
+                <div class="stat-label">Blood Requests active</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number">200+</span>
-                <div class="stat-label">Partner Hospitals</div>
+                <span class="stat-number">1000s+</span>
+                <div class="stat-label">Contacted for blood need</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number">24/7</span>
-                <div class="stat-label">Emergency Support</div>
+                <span class="stat-number live">LIVE!</span>
+                <div class="stat-label">Nearby Blood Bank Tracking Mechanism</div>
             </div>
         </section>
 
