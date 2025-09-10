@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import EmailValidator, RegexValidator, MinLengthValidator
-
+from .models import Post
 
 BLOOD_GROUPS = [
     ('A+', 'A+'),
@@ -123,3 +123,9 @@ class BRequestForm(forms.Form):
 class ProfileForm(forms.Form):
      bgroup=forms.ChoiceField(label='blood-group', choices=BLOOD_GROUPS, required=True)
      district=forms.ChoiceField(label='District', choices=DISTRICT_CHOICES, required=True)
+     phonenumber=forms.CharField(label='Mobile Number')
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'image']
