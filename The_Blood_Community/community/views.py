@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import RegistrationForm, LoginForm, BRequestForm, ProfileForm
-from .models import Profile, BRequest
+from .forms import RegistrationForm, LoginForm, BRequestForm, ProfileForm, PostForm
+from .models import Profile, BRequest, Post
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -130,7 +130,8 @@ class DonateBlood(View):
 
 class CommunityAndPosts(View):
     def get(self, request):
-        return render(request, 'communityandposts.html')
+        posts=Post.objects.all().order_by('-time')
+        return render(request, 'communityandposts.html', {'posts':posts})
     
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
@@ -138,7 +139,8 @@ class ProfileView(View):
         current_user=request.user
         form= ProfileForm(initial={
         'bgroup':current_user.profile.bgroup,
-        'district':current_user.profile.district})
+        'district':current_user.profile.district, 'phonenumber':current_user.profile.phone})
+        
         return render(request, 'profile.html', {'form': form , 'user':current_user})
     def post(self, request):
         current_user=request.user
@@ -146,8 +148,10 @@ class ProfileView(View):
         if form.is_valid():
             district=form.cleaned_data['district']
             bgroup=form.cleaned_data['bgroup']
+            number=form.cleaned_data['phonenumber']
             current_user.profile.district=district
             current_user.profile.bgroup=bgroup
+            current_user.profile.phone=number
             current_user.profile.save()
             messages.success(request, "Profile Updated successfully...")
             return redirect('community:home')
@@ -165,4 +169,26 @@ def delete(request, brid):
     br=BRequest.objects.get(id=brid)
     br.delete()
     messages.success(request, "Glad you got it !")
+    return redirect('community:home')
+
+@method_decorator(login_required, name='dispatch')
+class create_post(View):
+    def post(self, request):
+        form = PostForm(request.POST, request.FILES)  
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            messages.success(request, 'Posted')
+            return redirect("community:home")
+        return render(request, "create_post.html", {"form": form})
+    def get(self, request):
+        form = PostForm()
+        return render(request, "create_post.html", {"form": form})
+
+@login_required
+def delete_post(request, postid):
+    post=Post.objects.get(id=postid)
+    post.delete()
+    messages.success(request, 'deleted successfully')
     return redirect('community:home')

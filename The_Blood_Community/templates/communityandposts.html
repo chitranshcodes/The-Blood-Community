@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Posts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .post-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .post-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .post-img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+    .post-content {
+      padding: 15px;
+    }
+    .post-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 0 10px;
+      color: #c82333;
+    }
+    .post-meta {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .delete-btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background: #dc3545;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .delete-btn:hover {
+      background: #a71d2a;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background: #110ca4ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+    <a href="{% url 'community:create_post' %}" class="btn">create_post</a>
+  <div class="post-container">
+    {% for post in posts %}
+      <div class="post-card">
+        {% if post.image %}
+          <img src="{{ post.image.url }}" alt="Post Image" class="post-img">
+        {% endif %}
+        <div class="post-content">
+          <h2 class="post-title">{{ post.title }}</h2>
+          <p>{{ post.content }}</p>
+          <p class="post-meta">Posted by {{ post.user.username }} on {{ post.time|date:"M d, Y H:i" }}</p>
+
+          {% if request.user == post.user %}
+            <a class="delete-btn" href="{% url 'community:delete_post' post.id %}">Delete!</a>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <p>No posts yet.</p>
+    {% endfor %}
+  </div>
+</body>
+</html>

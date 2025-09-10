@@ -14,5 +14,8 @@ urlpatterns = [
     path('logout/', views.Logout, name='logout'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('requestblood/', views.RequestBlood.as_view(), name='requestblood'),
-    path('delete/<int:brid>', views.delete, name='delete')
+    path('delete/<int:brid>', views.delete, name='delete'),
+    path('create_post/', views.create_post.as_view(), name='create_post'),
+    path('delete_post/<int:postid>', views.delete_post, name='delete_post')
+
 ]
