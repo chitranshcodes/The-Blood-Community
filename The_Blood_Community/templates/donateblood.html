@@ -117,6 +117,7 @@
             <th>Blood group needed</th>
             <th>Time posted</th>
             <th>Contact mail</th>
+            <th>Mobile Number</th>
           </tr>
         </thead>
         <tbody>
@@ -142,6 +143,7 @@
                   <a href="https://mail.google.com/mail/?view=cm&to={{ brequest.user.email|urlencode }}&su=Blood Donation Request&body=Hello, I am {{ user.username|urlencode }} ({{ user.email|urlencode }}). I'd like to help with your blood request." target="_blank" class="btn">Mail now</a>
                 </th>
               {% endif %}
+              <th>{{ brequest.user.profile.phone }}</th>
             </tr>
           {% endfor %}
         </tbody>
