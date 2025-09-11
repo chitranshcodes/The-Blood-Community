@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -112,6 +113,7 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -125,13 +127,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email backend
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+# Initialise environment variables
+env = environ.Env(
+    DEBUG=(bool, False)   # Default False if not set
+)
+
+# Read .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 # Brevo SMTP
-EMAIL_HOST = "smtp-relay.brevo.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "969c1f001@smtp-brevo.com"  # your account email
-EMAIL_HOST_PASSWORD = "ghwUqWdJnQ8ZxOFz"         # from Brevo
-DEFAULT_FROM_EMAIL = "ds2401125@gmail.com"
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # your account email
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')         # from Brevo
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 #media
 
