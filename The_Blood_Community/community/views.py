@@ -107,7 +107,7 @@ class RequestBlood(View):
             #mail
             subject='Urgent Need of Blood nearby'
             message=f'{current_user} from {district} urgently needs {bgroup} blood group. Plz contact the person and perform a goodwill by donating the blood to save a life. You can contact the needy with his/her mobile number {current_user.profile.phone}. Wish you the best!'
-            from_email=env('DEFAULT_FROM_EMAIL')
+            from_email=settings.DEFAULT_FROM_EMAIL
             Receipent_List=[]
             qs=User.objects.filter(profile__district=district)
             for u in qs:
