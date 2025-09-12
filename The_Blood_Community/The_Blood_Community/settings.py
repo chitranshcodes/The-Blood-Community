@@ -24,20 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y(-8k6nt_^oxiv-a_0a&wi7ep_x#rj&n%jiy)46%g@adydp_26'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ['chitranshgaur.pythonanywhere.com']
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 
-# For local development, static files are served from app-level "static/" folders
-STATIC_URL = '/static/'
-
-# For collectstatic (production/deployment)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
-
-# Optional: if you also want to serve extra local assets
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # your project-level static folder
-]
 # Application definition
 
 INSTALLED_APPS = [
