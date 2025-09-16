@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
-import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -130,21 +129,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email backend
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-# Initialise environment variables
-env = environ.Env(
-    DEBUG=(bool, False)   # Default False if not set
-)
 
-# Read .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 
 # Brevo SMTP
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env.int('EMAIL_PORT')
-EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # your account email
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')         # from Brevo
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  # your account email
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')         # from Brevo
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 #media
 
