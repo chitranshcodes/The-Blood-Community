@@ -77,7 +77,7 @@ class Login(View):
 class NeedBlood(View):
     def get(self, request):
         current_user=request.user
-        json_path=os.path.join(settings.BASE_DIR, 'community', "data", 'blood_bank.json')
+        json_path=os.path.join(settings.BASE_DIR, 'blood_bank.json')
         with open(json_path, "r", encoding='utf-8') as f:
             blood_banks=json.load(f)
         district=current_user.profile.district
@@ -127,7 +127,7 @@ class DonateBlood(View):
     def get(self, request):
         current_user=request.user
         brequests=BRequest.objects.filter(district=current_user.profile.district).order_by('-time')
-        json_path=os.path.join(settings.BASE_DIR, 'community', "data", 'blood_bank.json')
+        json_path=os.path.join(settings.BASE_DIR, 'blood_bank.json')
         with open(json_path, "r", encoding='utf-8') as f:
             blood_banks=json.load(f)
         district=current_user.profile.district
